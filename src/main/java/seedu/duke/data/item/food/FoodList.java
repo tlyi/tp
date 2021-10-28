@@ -48,6 +48,25 @@ public class FoodList extends ItemList {
     }
 
     /**
+     * Sorts the food list in ascending format according to the date and time.
+     */
+    @Override
+    public void sortList() {
+        this.internalItems.sort(Comparator.comparing(Item::getDateTime));
+    }
+
+    /**
+     * Counts the number of food items consumed at night in the week.
+     *
+     * @return The integer value count which indicates the number of food items consumed at night
+     */
+    public int getSupperCount() {
+        return (int) internalItems.stream().filter(f -> f.getTimePeriod().equals(TimePeriod.Night)).count();
+    }
+
+    //====================Printing methods=========================
+
+    /**
      * Converts the entire food list to string format for printing purpose.
      *
      * @return The food list in a single string
@@ -90,22 +109,8 @@ public class FoodList extends ItemList {
         return foodListInString.toString().stripTrailing();
     }
 
-    /**
-     * Sorts the food list in ascending format according to the date and time.
-     */
-    @Override
-    public void sortList() {
-        this.internalItems.sort(Comparator.comparing(Item::getDateTime));
-    }
 
-    /**
-     * Counts the number of food items consumed at night.
-     *
-     * @return The integer value count which indicates the number of food items consumed at night
-     */
-    public int getSupperCount() {
-        return (int) internalItems.stream().filter(f -> f.getTimePeriod().equals(TimePeriod.Night)).count();
-    }
+    //====================Private methods=========================
 
     /**
      * Helper method used in deleteItem for food to get the

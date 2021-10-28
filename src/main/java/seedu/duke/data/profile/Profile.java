@@ -422,14 +422,15 @@ public class Profile {
      */
     public boolean checkProfileComplete() {
         return getProfileName().isValid() && getProfileHeight().isValid() && getProfileWeight().isValid()
-                && getProfileGender().isValid() && getProfileAge().isValid() && getProfileActivityFactor().isValid();
+                && getProfileGender().isValid() && getProfileAge().isValid() && getProfileActivityFactor().isValid()
+                && getProfileCalorieGoal().isValid();
     }
 
     /**
      * Check if any of profile attributes is valid.
      * If all profile attributes are incorrect, it will be deemed as profile not present.
      *
-     * @return true if at least one of the profile attributes are invalid.
+     * @return true if at least one of the profile attributes is valid.
      */
     public boolean checkProfilePresent() {
         return getProfileName().isValid() || getProfileHeight().isValid() || getProfileWeight().isValid()

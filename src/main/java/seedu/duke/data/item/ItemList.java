@@ -16,6 +16,8 @@ public abstract class ItemList extends ItemBank {
     protected static final String LS = System.lineSeparator();
     protected static final String TAB = "\t";
 
+    //====================Override methods=========================
+
     /**
      * Adds an item into the item list.
      *
@@ -84,6 +86,9 @@ public abstract class ItemList extends ItemBank {
         }
         this.sortList();
     }
+
+
+    //====================Common Helper methods for Food List and Exercise List=========================
 
     /**
      * Gets the day of the week of the given date.

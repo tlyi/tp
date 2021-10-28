@@ -29,14 +29,14 @@ public class AddFoodBankCommand extends Command {
     @Override
     public CommandResult execute() {
         if (food.getCalories() < 0) {
-            logger.log(Level.WARNING, "Food calorie is invalid");
+            logger.log(Level.FINE, "Food calorie is invalid");
             return new CommandResult(CommandMessages.MESSAGE_INVALID_FOOD_CALORIES);
         }
         assert food.getCalories() >= 0 : "Food calorie is valid";
         try {
             super.foodBank.addItem(this.food);
             logger.log(Level.FINE, "Food is successfully added to food bank");
-            return new CommandResult(String.format(MESSAGE_SUCCESS, this.food.toStringWithoutTime()));
+            return new CommandResult(String.format(MESSAGE_SUCCESS, this.food.toStringWithoutDateAndTime()));
         } catch (DuplicateItemInBankException e) {
             return new CommandResult(String.format(CommandMessages.MESSAGE_FOOD_ALREADY_EXISTS_IN_BANK,
                     this.food.getName()));

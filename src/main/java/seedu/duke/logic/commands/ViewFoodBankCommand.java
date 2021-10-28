@@ -15,7 +15,7 @@ public class ViewFoodBankCommand extends Command {
     @Override
     public CommandResult execute() {
         if (super.foodBank.getSize() == 0) {
-            logger.log(Level.WARNING, "Food bank is empty");
+            logger.log(Level.FINE, "Food bank is empty");
             return new CommandResult(CommandMessages.MESSAGE_EMPTY_FOOD_BANK);
         }
         assert foodBank.getSize() > 0 : "Food bank is not empty";

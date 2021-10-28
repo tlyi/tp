@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 /* A class that manage the statistics of the calories*/
 public class Statistics {
     public static final String FULL_BLOCK = "█";
+    public static final String HALF_BLOCK = "▌";
     public static final String MESSAGE_CALORIE_GAIN = "Your calorie gained from food is: %d";
     public static final String MESSAGE_CALORIE_LOST = "Your calorie lost from exercise is: %d";
     public static final String MESSAGE_CALORIE_NET = "Your net calorie intake is: %d";
@@ -27,13 +28,16 @@ public class Statistics {
             + "Hi %s, this is your calorie summary for the week.\n";
     public static final String FOOD_HEADER = "Food:\n"
             + "You have consumed %1$s cal this week from %2$s to %3$s.";
+    public static final String EXERCISE_HEADER = "Exercise:\n"
+            + "You have burnt %1$s cal this week from %2$s to %3$s.";
     public static final String FOOD_GRAPH_HEADER = "Calorie gained from food (Daily)\n%s";
-    public static final String EXERCISE_HEADER = "You have lost %s cal from exercising for the last 7 days.";
     public static final String EXERCISE_GRAPH_HEADER = "Calorie burnt from exercise (Daily)\n%s";
-    public static final String MESSAGE_CAUTION = "\n ** The net calorie calculation includes calories gained from food,"
-            + " calories burnt from exercises\n  "
-            + "and daily normal activities. All calculations used the "
-            + "latest values from updated in profile.";
+    public static final String MESSAGE_CAUTION = "\n** Net calories = Food consumed - Exercise output - "
+            + "your basal metabolic rate, where \n"
+            + "your basal metabolic rate is a factor of your age, gender, "
+            + "height and weight retrieved from your profile.\n"
+            + "All calculations are done in calories.";
+
     public static final String GRAPH_BUILDER = "%1$s   %2$s    %3$s";
     public static final int MAX_DATE_OFFSET = 6;
     public static final String MESSAGE_NET_CALORIES_INTRO = "Daily net calories**:\n";
@@ -216,11 +220,11 @@ public class Statistics {
         overviewSummary.append(String.format(OVERVIEW_HEADER, profile.getProfileName().getName())).append(Ui.LS)
                 .append(String.format(FOOD_HEADER, getTotalWeeklyCalories(getDailyFoodCalories()),
                         getFormatDate(6), getFormatDate(0))).append(Ui.LS)
-                .append(String.format(FOOD_GRAPH_HEADER, getGraph(getDailyFoodCalories())))
-                .append(String.format(EXERCISE_HEADER, getTotalWeeklyCalories(getDailyExerciseCalories())))
-                .append(Ui.LS)
-                .append(String.format(EXERCISE_GRAPH_HEADER, getGraph(getDailyExerciseCalories())))
-                .append(getNetCaloriesMessage()).append(Ui.LS).append(Ui.LS)
+                .append(String.format(FOOD_GRAPH_HEADER, getGraph(getDailyFoodCalories()))).append(Ui.LS)
+                .append(String.format(EXERCISE_HEADER, getTotalWeeklyCalories(getDailyExerciseCalories()),
+                        getFormatDate(6), getFormatDate(0))).append(Ui.LS)
+                .append(String.format(EXERCISE_GRAPH_HEADER, getGraph(getDailyExerciseCalories()))).append(Ui.LS)
+                .append(getNetCaloriesMessage()).append(Ui.LS)
                 .append(getSupperCountMessage()).append(Ui.LS)
                 .append(MESSAGE_CAUTION).append(Ui.LS)
                 .append(Ui.DIVIDER).append(Ui.LS)

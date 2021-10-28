@@ -15,7 +15,7 @@ public class ViewFutureExerciseListCommand extends Command {
     @Override
     public CommandResult execute() {
         if (super.futureExerciseItems.getSize() == 0) {
-            logger.log(Level.WARNING, "Future exercise list is empty");
+            logger.log(Level.FINE, "Future exercise list is empty");
             return new CommandResult(CommandMessages.MESSAGE_EMPTY_FUTURE_EXERCISE_LIST);
         }
         assert futureExerciseItems.getSize() > 0 : "Future exercise list is not empty";

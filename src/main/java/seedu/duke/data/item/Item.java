@@ -29,6 +29,8 @@ public abstract class Item {
         this.calories = calories;
     }
 
+    //====================Getter and Setter Methods=========================
+
     /**
      * Gets the name or description of the item.
      *
@@ -65,6 +67,8 @@ public abstract class Item {
         this.calories = calories;
     }
 
+    //====================Non-abstract methods=========================
+
     /**
      * Converts the item in correct string format.
      *
@@ -72,11 +76,6 @@ public abstract class Item {
      */
     @Override
     public String toString() {
-        return this.getName() + " (" + this.getCalories() + " cal)";
-    }
-
-
-    public String toStringWithoutTime() {
         return this.getName() + " (" + this.getCalories() + " cal)";
     }
 
@@ -88,6 +87,22 @@ public abstract class Item {
     public String toFileTextString() {
         return FILE_TEXT_DELIMITER + this.getName() + FILE_TEXT_DELIMITER + this.getCalories();
     }
+
+    //====================Abstract methods=========================
+
+    /**
+     * Converts the item in string format which only shows the item name description and calorie,
+     * will be implemented in Food and Exercise classes.
+     *
+     * @return The item name and calorie display
+     */
+    public abstract String toStringWithoutDateAndTime();
+
+    /**
+     * Converts the item in the string format same as toString method but with date.
+     * @return The item name, calorie and date in string
+     */
+    public abstract String toStringWithDate();
 
     /**
      * Gets the date of the item, will be implemented in Food and Exercise classes.
@@ -103,6 +118,8 @@ public abstract class Item {
      */
     public abstract void setDate(LocalDate date);
 
+
+    //====================Food Item methods=========================
 
     /**
      * Gets the time period of the item, will be implemented in Food class.

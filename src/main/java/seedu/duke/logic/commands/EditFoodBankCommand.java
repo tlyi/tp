@@ -11,7 +11,7 @@ import java.util.logging.Logger;
  * Represents the command that when executed, edits an item in the Food Bank.
  */
 public class EditFoodBankCommand extends Command {
-    public static final String MESSAGE_SUCCESS = "Food bank item number %d has been changed to:"
+    public static final String MESSAGE_SUCCESS = "Item number %d in the food bank has been changed to:"
             + CommandMessages.INDENTED_LS + "%s";
     public static final String[] EXPECTED_PREFIXES = {
             COMMAND_PREFIX_FOOD_BANK,
@@ -34,7 +34,7 @@ public class EditFoodBankCommand extends Command {
     @Override
     public CommandResult execute() {
         if (super.foodBank.getSize() == 0) {
-            logger.log(Level.WARNING, "Food bank list is empty.");
+            logger.log(Level.FINE, "Food bank list is empty.");
             return new CommandResult(CommandMessages.MESSAGE_EMPTY_FOOD_BANK);
         }
         try {
@@ -45,15 +45,15 @@ public class EditFoodBankCommand extends Command {
             }
             if (this.newCalories != NULL_CALORIES) {
                 if (this.newCalories < 0) {
-                    logger.log(Level.WARNING, "Detected negative food calorie");
+                    logger.log(Level.FINE, "Detected negative food calorie");
                     return new CommandResult(CommandMessages.MESSAGE_INVALID_FOOD_CALORIES);
                 }
                 item.setCalories(this.newCalories);
             }
             return new CommandResult(String.format(MESSAGE_SUCCESS, this.itemIndex + 1,
-                    item.toStringWithoutTime()));
+                    item.toString()));
         } catch (IndexOutOfBoundsException e) {
-            logger.log(Level.WARNING, "Detected invalid food bank item index.");
+            logger.log(Level.FINE, "Detected invalid food bank item index.");
             if (super.foodBank.getSize() == 1) {
                 return new CommandResult(CommandMessages.MESSAGE_ONLY_ONE_IN_LIST);
             }

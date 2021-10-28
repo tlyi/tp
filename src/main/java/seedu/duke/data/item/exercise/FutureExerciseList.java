@@ -18,11 +18,6 @@ public class FutureExerciseList extends ExerciseList {
     public Exercise deleteItem(int index) {
         return (Exercise) internalItems.remove(index);
     }
-    /**
-     * Converts the entire future exercise list to string format for printing purpose.
-     *
-     * @return The future exercise list in a single string.
-     */
 
     /**
      * Converts the entire future exercise list to string format for printing purpose.
@@ -51,6 +46,12 @@ public class FutureExerciseList extends ExerciseList {
 
     /**
      * Adds all recurring exercises between two dates into the FutureExerciseList.
+     *
+     * @param description The name description of the recurring exercise
+     * @param calories The calorie burnt per each exercise
+     * @param startDate The starting date of the recurring exercise
+     * @param endDate The end date of the recurring exercise
+     * @param dayOfTheWeek The day(s) of the week for participating in the recurring exercise
      */
     public void addRecurringExercises(String description, int calories,
                                       LocalDate startDate, LocalDate endDate, ArrayList<Integer> dayOfTheWeek) {
@@ -61,11 +62,10 @@ public class FutureExerciseList extends ExerciseList {
                 if (dayOfReoccurrence == day) {
                     super.addItem(new Exercise(description, calories, currentDate));
                     currentDate = currentDate.plusDays(ONE_WEEK);
-                    dayOfReoccurrence = currentDate.getDayOfWeek().getValue();
                 } else {
                     currentDate = currentDate.plusDays(ONE_DAY);
-                    dayOfReoccurrence = currentDate.getDayOfWeek().getValue();
                 }
+                dayOfReoccurrence = currentDate.getDayOfWeek().getValue();
             }
             super.sortList();
         }

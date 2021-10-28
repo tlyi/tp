@@ -38,14 +38,14 @@ public class AddFutureExerciseCommand extends Command {
 
         if (isCaloriesFromBank) {
             try {
-                this.calories = super.exerciseBank.getCaloriesOfItemWithMatchingName(this.description);
+                this.calories = super.exerciseBank.findCalorie(this.description);
             } catch (ItemNotFoundInBankException e) {
                 return new CommandResult(String.format(
                         CommandMessages.MESSAGE_INVALID_EXERCISE_NOT_IN_BANK, this.description));
             }
         } else {
             if (this.calories <= 0) {
-                logger.log(Level.WARNING, "Exercise calorie is invalid");
+                logger.log(Level.FINE, "Exercise calorie is invalid");
                 return new CommandResult(CommandMessages.MESSAGE_INVALID_EXERCISE_CALORIES);
             }
         }
@@ -54,7 +54,7 @@ public class AddFutureExerciseCommand extends Command {
         assert exercise.getCalories() > 0 : "Exercise calorie is valid";
         super.futureExerciseItems.addItem(exercise);
         logger.log(Level.FINE, "Exercise is successfully added");
-        return new CommandResult(String.format(MESSAGE_SUCCESS, exercise));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, exercise.toStringWithDate()));
     }
 }
 

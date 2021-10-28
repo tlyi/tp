@@ -41,14 +41,14 @@ public class AddExerciseCommand extends Command {
 
         if (isCaloriesFromBank) {
             try {
-                this.calories = super.exerciseBank.getCaloriesOfItemWithMatchingName(this.description);
+                this.calories = super.exerciseBank.findCalorie(this.description);
             } catch (ItemNotFoundInBankException e) {
                 return new CommandResult(String.format(
                         CommandMessages.MESSAGE_INVALID_EXERCISE_NOT_IN_BANK, this.description));
             }
         } else {
             if (this.calories <= 0) {
-                logger.log(Level.WARNING, "Exercise calorie is invalid");
+                logger.log(Level.FINE, "Exercise calorie is invalid");
                 return new CommandResult(CommandMessages.MESSAGE_INVALID_EXERCISE_CALORIES);
             }
 

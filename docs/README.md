@@ -1,4 +1,4 @@
-# Duke
+# Fitbot
 
 {Give product intro here}
 

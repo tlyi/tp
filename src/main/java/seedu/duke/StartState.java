@@ -42,7 +42,7 @@ public class StartState {
     public static final String MESSAGE_INTRO_CALORIE_GOAL = "Please input your net calorie goal.";
     public static final String MESSAGE_INTRO_AGE = "How old are you?";
     public static final String MESSAGE_INTRO_GENDER = "What is your gender?(If you are a male, type 'm'"
-            + ", if you are a female , type 'f')";
+            + ", if you are a female, type 'f')";
     public static final String MESSAGE_INTRO_WEIGHT = "What's your weight? (in kg)";
     public static final String MESSAGE_INTRO_NAME = "What's your name?";
     public static final String MESSAGE_INTRO_HEIGHT = "What's your height? (in cm)";
@@ -72,7 +72,7 @@ public class StartState {
         } else {
             createNewProfile();
         }
-        ui.formatMessageFramedWithDivider(MESSAGE_CREATE_PROFILE_SUCCESSFUL,
+        ui.formatMessageWithBottomDivider(MESSAGE_CREATE_PROFILE_SUCCESSFUL,
                 ui.MESSAGE_DIRECT_HELP);
         return profile;
     }

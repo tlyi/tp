@@ -45,6 +45,7 @@ public class Food extends Item {
         setTimePeriod(this.dateTime);
     }
 
+    //====================Getter and Setter methods=========================
     /**
      * Gets the date and time of the food consumed.
      *
@@ -112,6 +113,8 @@ public class Food extends Item {
         return timePeriod;
     }
 
+    //====================To String methods=========================
+
     /**
      * Converts the Food item to string for printing in the Food List.
      *
@@ -120,6 +123,16 @@ public class Food extends Item {
     @Override
     public String toString() {
         return String.format(MESSAGE_FOOD, super.toString(), this.getTime().format(TIME_FORMATTER));
+    }
+
+    /**
+     * Converts the food item in string format which only shows the food item name description and calorie.
+     *
+     * @return The food item name and calorie display
+     */
+    @Override
+    public String toStringWithoutDateAndTime() {
+        return super.toString();
     }
 
     /**
@@ -143,6 +156,8 @@ public class Food extends Item {
                 + FILE_TEXT_DELIMITER
                 + this.getDateTime().format(DATE_TIME_FORMATTER);
     }
+
+    //====================Private methods=========================
 
     /**
      * Sets or updates time period according to the time provided in dateTime.

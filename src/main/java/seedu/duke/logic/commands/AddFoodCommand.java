@@ -40,14 +40,14 @@ public class AddFoodCommand extends Command {
 
         if (isCaloriesFromBank) {
             try {
-                this.calories = super.foodBank.getCaloriesOfItemWithMatchingName(this.description);
+                this.calories = super.foodBank.findCalorie(this.description);
             } catch (ItemNotFoundInBankException e) {
                 return new CommandResult(String.format(
                         CommandMessages.MESSAGE_INVALID_FOOD_NOT_IN_BANK, this.description));
             }
         } else {
             if (this.calories < 0) {
-                logger.log(Level.WARNING, "Detected negative food calorie");
+                logger.log(Level.FINE, "Detected negative food calorie");
                 return new CommandResult(CommandMessages.MESSAGE_INVALID_FOOD_CALORIES);
             }
         }
@@ -56,7 +56,7 @@ public class AddFoodCommand extends Command {
         super.foodItems.addItem(food);
         assert foodItems.getSize() > 0 : "The size of the food list should at least larger than 0";
         logger.log(Level.FINE, "New food item has been added to the food list");
-        return new CommandResult(String.format(MESSAGE_SUCCESS, food));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, food.toStringWithDate()));
 
     }
 }

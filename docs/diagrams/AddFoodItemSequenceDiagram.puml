@@ -7,48 +7,40 @@ hide footbox
 participant "command:AddFoodCommand" As AddFoodCommand LOGIC_COLOUR
 participant "foodBank:FoodBank" As FoodBank DATA_COLOUR
 
-activate AddFoodCommand LOGIC_COLOUR
 ?->AddFoodCommand :execute()
+activate AddFoodCommand LOGIC_COLOUR
 
-alt isCalorieFromFoodBank
+opt isCalorieFromFoodBank
     AddFoodCommand -> FoodBank : findCalorie(description)
     activate FoodBank DATA_COLOUR
     FoodBank --> AddFoodCommand : calories
     deactivate FoodBank
-    create "food" As Food1 DATA_COLOUR
-    AddFoodCommand -> Food1 ** : new Food(description,calories,dateTime)
-    activate Food1 DATA_COLOUR
-    Food1 -> Food1 ++ DATA_COLOUR: setTimePeriod (dateTime)
-    Food1 --> Food1 --
-    Food1 --> AddFoodCommand : food
-    deactivate Food1
-else
-create "food" As Food2 DATA_COLOUR
-    AddFoodCommand -> Food2 ** : new Food(description,calories,dateTime)
-    activate Food2 DATA_COLOUR
-    Food2 -> Food2 ++ DATA_COLOUR : setTimePeriod (dateTime)
-    Food2 --> Food2 --
-    Food2 --> AddFoodCommand : food
-    deactivate Food2
 end
+
+create "food:Food" As Food DATA_COLOUR
+AddFoodCommand -> Food ** : new Food(description,calories,dateTime)
+activate Food DATA_COLOUR
+Food -> Food ++ DATA_COLOUR : setTimePeriod (dateTime)
+Food --> Food --
+Food --> AddFoodCommand : food
+deactivate Food
 
 participant "filteredFoodList:FoodList" As FoodList DATA_COLOUR
 participant "commandResult:CommandResult" As CommandResult LOGIC_COLOUR
-AddFoodCommand -> FoodList : \t\t\t\t\t\t\t\t\t\t\t\t\t\t\taddItem(food)
+AddFoodCommand -> FoodList : \t\t\t\t\t\t\t\t\t\taddItem(food)
 activate FoodList DATA_COLOUR
 FoodList -> FoodList ++  DATA_COLOUR: sortList()
 FoodList --> FoodList --
 FoodList --> AddFoodCommand
 deactivate FoodList
-AddFoodCommand -> CommandResult **: \t\t\t\t\t\t\t\t\tnew CommandResult(String.format(MESSAGE_SUCCESS,food))
+AddFoodCommand -> CommandResult **: \t\t\t\t\tnew CommandResult(String.format(MESSAGE_SUCCESS,food))
 activate CommandResult LOGIC_COLOUR
 CommandResult --> AddFoodCommand
 deactivate CommandResult
 
 ?<-- AddFoodCommand : commandResult\t
 deactivate AddFoodCommand
-destroy Food1
-destroy Food2
+destroy Food
 destroy CommandResult
 destroy AddFoodCommand
 @enduml

@@ -15,7 +15,7 @@ public class ViewExerciseBankCommand extends Command {
     @Override
     public CommandResult execute() {
         if (super.exerciseBank.getSize() == 0) {
-            logger.log(Level.WARNING, "Exercise bank is empty");
+            logger.log(Level.FINE, "Exercise bank is empty");
             return new CommandResult(CommandMessages.MESSAGE_EMPTY_EXERCISE_BANK);
         }
         assert exerciseBank.getSize() > 0 : "Exercise bank is not empty";

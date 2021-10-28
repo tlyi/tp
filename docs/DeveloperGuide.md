@@ -1,9 +1,42 @@
+---
+layout: page
+title: Developer Guide
+---
 
-# Developer Guide
+The aim of this guide is to help the reader to understand how the system and components of Fitbot is
+designed, implemented and tested. In the same time, this developer guide also serves to help developers who are interested in understanding the architecture
+of Fitbot and some design considerations.
+[Don't know about Fitbot? Click here to find more.](#https://ay2122s1-cs2113t-f14-2.github.io/tp/UserGuide.html)
+
+## Content page
+[Acknowledgements](#acknowledgements)
+
+[Design](#design)
+- [Architecture](#architecture)
+- [Data Component (Profile)](#data-component-profile)
+- [Data Component (ItemBank and Item)](#data-component-itembank-and-item)
+  - [ItemBank](#itembank-class)
+  - [Item](#item-class)
+- [Logic Component](#logic-component)
+- [Storage Component](#storage-component)
+- [Implementation](#implementation)
+   - [Add Food Item Feature](#proposed-add-a-food-item-feature)
+   - [Design Considerations](#design-considerations)
+- [Product Scope](#product-scope)
+   - [Target User Profile](#target-user-profile)
+   - [Value Proposition](#value-proposition)
+- [User Stories](#user-stories)
+- [Non-functional Requirements](#non-functional-requirements)
+- [Glossary](#glossary)
+- [Instruction for Manual Testing](#instructions-for-manual-testing)
+  - [Launch and Shut Down](#launch-and-shut-down)
+  - [Manipulating Data](#manipulating-data)
+  - [Saving Data](#saving-data)
 
 ## Acknowledgements
 
 {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
+
 
 ## Design 
 
@@ -212,6 +245,15 @@ This way ensures that each class has a _single responsibility_ with little coupl
 This section describes some noteworthy details on how certain features are implemented
 and some design considerations.
 
+
+#### Parsing of Commands
+The sequence diagram below models the interactions between the different classes within the Logic component.
+This particular case illustrates how a user input add f/potato c/20 is parsed and process to execute the appropriate actions.
+
+<p align="center" width="100%">
+  <img width="100%" src="images/LogicSequenceDiagram.png" alt="Logic Sequence Diagram"/>
+</p>
+
 #### [Proposed] Add a Food Item Feature
 
 ![Add Food Item Sequence Diagram](images/AddFoodItemSequenceDiagram.png)
@@ -241,14 +283,17 @@ stage, the `AddFoodCommand` is successfully ended.
 
 #### Design considerations:
 
-The current data structure used in `FoodList` is [singly Linked List](#_singly-linked-list_), which required O(n<sup>2</sup>) to ensure that
-the list is sorted according to date and time. The rationale of choosing linked list is because it allows sizable array
-implementation. In the future increment, to increase the code efficiency, the data structure is considered to change to 
-[Priority Queue](#_priority-queue_) to achieve O(nlogn) addition.
+The current data structure used in `FoodList` is [Array List](#_array-list_). The rationale of choosing an array list implementation is because
+it supports resizability and random accessibility. However, the drawback of such an array list is that sorting requires 
+O(n<sup>2</sup>), which slows down the code efficiency. In the future increment, alternative data structures such as
+[Priority Queue](#_priority-queue_) and [Min Heap](#_min-heap_) can be implemented to achieve O(logn) addition and they are
+naturally sorted and thus no additional sorting required.
 
-The same reasoning for the class `ItemBank`, which is the superclass of `FoodList` and `ExerciseList`, the data structure
-used is also a [singly Linked List](#_singly-linked-list_). In the future increment, since the `ItemBank` need to perform query operation in an efficient
-way, the data structure of the attribute will be changed to HashMap to achieve O(1) query time.  
+The same reasoning for the class `ItemBank`, which is the superclass of `FoodList` and `ExerciseList`,the current implementation
+data structure is also an [Array List](#_array-list_). In the future increment, since the `ItemBank` need to perform query 
+operation frequently and the items inside need to be sorted alphabetically, the data structure of the attribute will be changed 
+to [TreeMap](#_tree-map_) to achieve O(1) query time.
+
 <p align="center" width="100%">
   <img width="60%" src="images/ItemBankCodeSnippet.png" alt="Item Bank Code Snippet"/>
 </p>
@@ -296,7 +341,7 @@ Its overview shows your progress over the weeks, indicating whether or not you h
 |v2.0|user|find a to-do item by name|locate a to-do without having to go through the entire list|
 |v2.0|user|have a summary|see my calorie targets
 |v2.0|user|have a history|spend less time typing all the requirements to store items|
-|v2.0|user|have a exercise list that update itself|have more time for exercises|
+|v2.0|user|have an exercise list that update itself|have more time for exercises|
 |v2.0|user|have a sorted food list|see what I have eaten on different times of the day|
 |v2.0|user|have a delete all command|start afresh|
 
@@ -307,38 +352,76 @@ Its overview shows your progress over the weeks, indicating whether or not you h
 2. Should be able to hold up to at least a year of data without a slowdown of performance in daily use.
 3. Any user that is comfortable with typing of speeds >55 words per minute would be able to accomplish these tasks faster than if they used a mouse to navigate.
 ## Glossary
-#### **_dependency_**  
+#### _dependency_ 
 In UML diagram, dependency is a directed relationship which is used to show that some elements or a set of elements requires, 
 needs or depends on other model elements for specification or implementation.
-#### **_superclass_**  
+#### _superclass_
 A class from which other classes inherit its code. The class that inherits its code will be able to access some/all 
 functionalities from the superclass.
-#### **_subclass_**   
+#### _subclass_  
 A class that inherits code from the other classes. Such class will be able to access some/all functionalities from its superclass, 
 but not vice versa.
-#### **_abstract class_** 
+#### _abstract class_
 A class that cannot be created using constructor. Usually such class is a superclass, and it does not give meaningful 
 value if one tries to construct it.
-#### **_self invocation_**
+#### _self invocation_
 In UML sequence diagram, a method that does a calling to another of its own methods is called self-invocation. 
-#### **_singly linked list_**
-A linear data structure that behaves like an array except that the elements inside linked list is not store at a contiguous 
-location. In Java, linked list can be implemented using `ArrayList` in `Collection`.
-#### **_priority queue_**
+#### _array list_
+A linear data structure that inherits Java `List` implementation and `Array` implementation. It behaves like a normal array,
+except that it is resizable. Moreover, the amount of time taken for reallocation the elements when capacity grows is a constant
+time. In Java, array list can be implemented using `ArrayList` in `Collection`.
+#### _priority queue_
 An abstract data type similar to a regular queue or stack data structure in which elements in priority queue are ordered
 and have "priority" associated with each element. The priority can be defined by the coder. In the case of `FoodList`, the
 priority will be defined as earlier date and time will have higher priority.
+#### _min heap_
+The implementation of min heap is almost the same as priority queue, in which it is sorted according to some "priority" 
+constraint. In addition, a min heap can be modelled as a [binary tree](#https://en.wikipedia.org/wiki/Binary_tree) structure
+having all the parent nodes smaller or equal to its children nodes. 
+#### _tree map_
+A tree map is a combination of tree structure and hash map structure. In Java, tree map is implemented using a self-balancing
+[Red-Black tree](https://www.geeksforgeeks.org/red-black-tree-set-1-introduction-2/) structure and it is sorted according
+to the natural order of its keys. In the case of `ItemBank`, the key should be the String type of the `Item` description, 
+which will be sorted lexicographically. \
 (more coming in the future...)
+
 ## Instructions for manual testing
 
-{Give instructions on how to do a manual product testing e.g., how to load sample data to be used for testing}
+Given below are some instructions that can be used to test the application manually. 
+
+### Recording Food Items:
+
+#### Adding a new Food Item
+
+1. Adding a new Food Item when the Food List is empty:
+   - Prerequisite: Checks if the food list is empty using `view f/`. An output message showing that
+   the current food list is empty is expected.
+   - Test case: `add f/chicken rice c/607` \
+   Expected: New Food Item is added to the Food List. A message telling the user that a new food item has been added will show up. 
+   The date and time are the date and time when the user call this command.
+   - Test case: `add f/chicken rice c/607 d/10-10-2021 t/1200` \
+   Expected: No Food Item is added to the Food List. A message will show up and tell the user that 
+   the date must be within 7 days of today.
+   - (more test cases )
+2. Viewing a new Food Item:
+   - Test case: `view f/` when the Food List is empty\
+   Expected: No food item shown. 
 
 ### Launch and shut down
 1. Initial launch
    1. Download the jar file and copy into an empty folder
    2. Go to your command prompt, and go into your directory.
    3. Run the command `java -jar Fitbot.jar`.
+   
    Expected: a data folder will be created in the file that contain Fitbot.jar.
+
+
+2. Setting Up Profile
+   1. Delete profile.txt if present.
+   2. Run _Fitbot_ using `java -jar Fitbot.jar`.
+   
+   Expected: _Fitbot_will prompt for your name upon start up.
+   
 
 ### Manipulating data
 
@@ -349,6 +432,7 @@ priority will be defined as earlier date and time will have higher priority.
    4. The file food_list.txt should have one entry.
    5. Run the application and delete the entry.
    6. Exit the application again.
+   
    Expected: food_list.txt should be empty.
 
 ### Saving Data
@@ -357,4 +441,5 @@ priority will be defined as earlier date and time will have higher priority.
    1. After exiting the application, change the values saved in the file.
    2. Upon start-up, all valid values will be changed in the application.
    3. Replace one of the text file generated by the application with lorem ipsum.
+   
    Expected: The application will be able to pick it up and ignore invalid data in relevant files.

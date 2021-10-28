@@ -44,13 +44,6 @@ public class DataManager {
         filterExerciseListAndFoodList();
     }
 
-    private void filterExerciseListAndFoodList() {
-        this.filteredExerciseItems = new ExerciseList();
-        filterExerciseListWithPastSevenDaysRecordOnly();
-        this.filteredFoodItems = new FoodList();
-        filterFoodListWithPastSevenDaysRecordOnly();
-    }
-
     /**
      * For initialization at the start of the application.
      */
@@ -67,12 +60,32 @@ public class DataManager {
 
     //====================Filtered Lists methods=========================
 
+    /**
+     * Returns the filtered Exercise List.
+     *
+     * @return filtered exercise list in DataManager object
+     */
     public ExerciseList getFilteredExerciseItems() {
         return filteredExerciseItems;
     }
 
+    /**
+     * Returns the filtered Food List.
+     *
+     * @return filtered food list in DataManager object
+     */
     public FoodList getFilteredFoodItems() {
         return filteredFoodItems;
+    }
+
+    /**
+     * Filters exercise list and food list that are within 7 days before today.
+     */
+    private void filterExerciseListAndFoodList() {
+        this.filteredExerciseItems = new ExerciseList();
+        filterExerciseListWithPastSevenDaysRecordOnly();
+        this.filteredFoodItems = new FoodList();
+        filterFoodListWithPastSevenDaysRecordOnly();
     }
 
     /**

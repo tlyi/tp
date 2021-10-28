@@ -12,7 +12,7 @@ import java.util.logging.Logger;
  * Represents the command that when executed, edits an item in the Future Exercise List.
  */
 public class EditFutureExerciseCommand extends Command {
-    public static final String MESSAGE_SUCCESS = "Upcoming exercise item number %d has been changed to:"
+    public static final String MESSAGE_SUCCESS = "Item number %d in upcoming exercises has been changed to:"
             + CommandMessages.INDENTED_LS + "%s";
     public static final String MESSAGE_INVALID_DATE = "The new date must be after today's date!";
     public static final String[] EXPECTED_PREFIXES = {
@@ -39,7 +39,7 @@ public class EditFutureExerciseCommand extends Command {
     @Override
     public CommandResult execute() {
         if (super.futureExerciseItems.getSize() == 0) {
-            logger.log(Level.WARNING, "Future exercise list is empty.");
+            logger.log(Level.FINE, "Future exercise list is empty.");
             return new CommandResult(CommandMessages.MESSAGE_EMPTY_FUTURE_EXERCISE_LIST);
         }
         try {
@@ -49,7 +49,7 @@ public class EditFutureExerciseCommand extends Command {
             }
             if (this.newCalories != NULL_CALORIES) {
                 if (this.newCalories <= 0) {
-                    logger.log(Level.WARNING, "Exercise calorie is invalid");
+                    logger.log(Level.FINE, "Exercise calorie is invalid");
                     return new CommandResult(CommandMessages.MESSAGE_INVALID_EXERCISE_CALORIES);
                 }
                 item.setCalories(this.newCalories);
@@ -60,10 +60,11 @@ public class EditFutureExerciseCommand extends Command {
                 }
                 item.setDate(this.newDate);
             }
+            super.futureExerciseItems.sortList();
             return new CommandResult(String.format(MESSAGE_SUCCESS, this.itemIndex + 1,
-                    item.toString()));
+                    item.toStringWithDate()));
         } catch (IndexOutOfBoundsException e) {
-            logger.log(Level.WARNING, "Detected invalid exercise item index.");
+            logger.log(Level.FINE, "Detected invalid exercise item index.");
             if (super.futureExerciseItems.getSize() == 1) {
                 return new CommandResult(CommandMessages.MESSAGE_ONLY_ONE_IN_LIST);
             }

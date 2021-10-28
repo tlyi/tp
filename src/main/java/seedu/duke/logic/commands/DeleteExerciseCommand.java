@@ -10,13 +10,8 @@ import java.util.logging.Logger;
  * Represents the command that when executed, deletes an Exercise item from the ExerciseList.
  */
 public class DeleteExerciseCommand extends Command {
-    public static final String MESSAGE_COMMAND_FORMAT = CommandMessages.QUOTATION + COMMAND_WORD_DELETE
-            + " " + COMMAND_PREFIX_EXERCISE + COMMAND_PREFIX_DELIMITER + "INDEX " + COMMAND_PREFIX_DATE
-            + COMMAND_PREFIX_DELIMITER + "DATE_IN_DD-MM-YYYY" + CommandMessages.QUOTATION
-            + ", where INDEX is the item number in the exercise list";
     public static final String MESSAGE_SUCCESS = "An exercise item has been deleted:"
-            + CommandMessages.INDENTED_LS + "%s"
-            + CommandMessages.LS + "Number of exercise item(s) left: %2$d";
+            + CommandMessages.INDENTED_LS + "%s";
     private static final String MESSAGE_EXERCISE_CLEAR = "All exercise items have been removed.";
 
     private static Logger logger = Logger.getLogger(DeleteExerciseCommand.class.getName());
@@ -50,21 +45,19 @@ public class DeleteExerciseCommand extends Command {
         }
         assert this.itemIndex > 0 : "Deleting an item only";
         if (super.exerciseItems.getSize() == 0) {
-            logger.log(Level.WARNING, "Exercise list is empty.");
+            logger.log(Level.FINE, "Exercise list is empty.");
             return new CommandResult(CommandMessages.MESSAGE_EMPTY_EXERCISE_LIST);
         }
         logger.log(Level.FINE, "Trying to delete item now");
         try {
             Exercise deletedExercise;
-            deletedExercise = super.exerciseItems.deleteItem(this.itemIndex, this.date); //edit by RY
-            return new CommandResult(String.format(MESSAGE_SUCCESS, deletedExercise, super.exerciseItems.getSize()));
+            deletedExercise = super.exerciseItems.deleteItem(this.itemIndex, this.date);
+            return new CommandResult(String.format(MESSAGE_SUCCESS,
+                    deletedExercise.toStringWithDate()));
         } catch (IndexOutOfBoundsException e) {
-            logger.log(Level.WARNING, "Detected invalid exercise item index.");
-            if (super.exerciseItems.getSize() == 1) {
-                return new CommandResult(CommandMessages.MESSAGE_ONLY_ONE_IN_LIST);
-            }
-            return new CommandResult(String.format(CommandMessages.MESSAGE_LIST_OUT_OF_BOUNDS,
-                    super.exerciseItems.getSize()));
+            return new CommandResult(String.format(CommandMessages.MESSAGE_EXERCISE_NOT_FOUND,
+                    this.itemIndex + 1,
+                    this.date.format(CommandMessages.DATE_FORMATTER)));
         }
     }
 }

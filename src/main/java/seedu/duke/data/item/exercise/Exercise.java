@@ -32,6 +32,9 @@ public class Exercise extends Item {
         this.date = date;
     }
 
+
+    //====================Getter and Setter methods=========================
+
     /**
      * Gets the date of the exercise taken.
      *
@@ -52,6 +55,28 @@ public class Exercise extends Item {
         this.date = date;
     }
 
+
+    //====================To String methods=========================
+
+    /**
+     * Converts the exercise item in string format which only shows the exercise item name description and calorie.
+     *
+     * @return The exercise item name and calorie display
+     */
+    @Override
+    public String toStringWithoutDateAndTime() {
+        return super.toString();
+    }
+
+    /**
+     * Converts the Exercise item to string for printing after adding or deleting Exercise.
+     *
+     * @return String pattern of Food item with time and date
+     */
+    public String toStringWithDate() {
+        return super.toString() + AT + this.getDate().format(DATE_FORMAT_FOR_PRINTING);
+    }
+
     /**
      * Converts the exercise to external file string format.
      *
@@ -63,14 +88,5 @@ public class Exercise extends Item {
                 + super.toFileTextString()
                 + FILE_TEXT_DELIMITER
                 + this.getDate().format(DATE_FORMATTER_FOR_STORAGE);
-    }
-
-    /**
-     * Converts the Exercise item to string for printing after adding or deleting Exercise.
-     *
-     * @return String pattern of Food item with time and date
-     */
-    public String toStringWithDate() {
-        return super.toString() + AT + this.getDate().format(DATE_FORMAT_FOR_PRINTING);
     }
 }

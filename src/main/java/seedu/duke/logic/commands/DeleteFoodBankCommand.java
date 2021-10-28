@@ -42,7 +42,7 @@ public class DeleteFoodBankCommand extends Command {
         }
         assert this.itemIndex > 0 : "Deleting an item only";
         if (super.foodBank.getSize() == 0) {
-            logger.log(Level.WARNING, "food bank is empty.");
+            logger.log(Level.FINE, "food bank is empty.");
             return new CommandResult(CommandMessages.MESSAGE_EMPTY_FOOD_BANK);
         }
         logger.log(Level.FINE, "Trying to delete item now");
@@ -51,7 +51,7 @@ public class DeleteFoodBankCommand extends Command {
             deletedFood = (Food) super.foodBank.deleteItem(this.itemIndex);
             return new CommandResult(String.format(MESSAGE_SUCCESS, deletedFood, super.foodBank.getSize()));
         } catch (IndexOutOfBoundsException e) {
-            logger.log(Level.WARNING, "Detected invalid food item index.");
+            logger.log(Level.FINE, "Detected invalid food item index.");
             if (super.foodBank.getSize() == 1) {
                 return new CommandResult(CommandMessages.MESSAGE_ONLY_ONE_IN_LIST);
             }

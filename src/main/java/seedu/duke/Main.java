@@ -17,7 +17,6 @@ import java.time.LocalDate;
  * Initialises the application and starts interaction with user.
  */
 public class Main {
-
     private DataManager dataManager;
     private Ui ui;
     private StorageManager storageManager;

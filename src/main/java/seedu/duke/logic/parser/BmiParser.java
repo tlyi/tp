@@ -33,7 +33,7 @@ public class BmiParser implements Parser {
                 return new InvalidCommand(e.getMessage());
             }
         } else {
-            logger.log(Level.WARNING, "Detected invalid input parameters for BMI calculation.");
+            logger.log(Level.FINE, "Detected invalid input parameters for BMI calculation.");
             return new InvalidCommand(CalculateBmiCommand.MESSAGE_INVALID_COMMAND_FORMAT);
         }
     }

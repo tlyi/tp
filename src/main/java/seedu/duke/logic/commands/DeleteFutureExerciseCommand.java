@@ -14,7 +14,7 @@ public class DeleteFutureExerciseCommand extends Command {
             + ", where X is the item number in the future exercise list";
     public static final String MESSAGE_SUCCESS = "An exercise item for the future has been deleted:"
             + CommandMessages.INDENTED_LS + "%s"
-            + CommandMessages.LS + "Number of exercise item(s) left: %2$d";
+            + CommandMessages.LS + "Number of upcoming exercise(s) left: %2$d";
     private static final String MESSAGE_FUTURE_EXERCISE_CLEAR = "All future exercise items have been removed.";
     public static final String[] EXPECTED_PREFIXES = {COMMAND_PREFIX_UPCOMING_EXERCISE};
 
@@ -42,17 +42,17 @@ public class DeleteFutureExerciseCommand extends Command {
         }
         assert this.itemIndex > 0 : "Deleting an item only";
         if (super.futureExerciseItems.getSize() == 0) {
-            logger.log(Level.WARNING, "Future exercise list is empty.");
+            logger.log(Level.FINE, "Future exercise list is empty.");
             return new CommandResult(CommandMessages.MESSAGE_EMPTY_FUTURE_EXERCISE_LIST);
         }
         logger.log(Level.FINE, "Trying to delete item now");
         try {
             Exercise deletedExercise;
             deletedExercise = super.futureExerciseItems.deleteItem(this.itemIndex);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, deletedExercise,
+            return new CommandResult(String.format(MESSAGE_SUCCESS, deletedExercise.toStringWithDate(),
                     super.futureExerciseItems.getSize()));
         } catch (IndexOutOfBoundsException e) {
-            logger.log(Level.WARNING, "Detected invalid exercise item index.");
+            logger.log(Level.FINE, "Detected invalid exercise item index.");
             if (super.futureExerciseItems.getSize() == 1) {
                 return new CommandResult(CommandMessages.MESSAGE_ONLY_ONE_IN_LIST);
             }

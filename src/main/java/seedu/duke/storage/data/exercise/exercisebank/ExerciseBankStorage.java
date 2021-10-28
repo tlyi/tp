@@ -39,7 +39,7 @@ public class ExerciseBankStorage extends Storage implements ExerciseBankStorageI
         try {
             return ItemBankDecoder.retrieveDataFromItemBank(filePath, TYPE);
         } catch (FileNotFoundException e) {
-            logger.log(Level.WARNING, "The path is missing ", filePath);
+            logger.log(Level.FINE, "The path is missing ", filePath);
             throw new UnableToReadFileException(filePath);
         }
     }

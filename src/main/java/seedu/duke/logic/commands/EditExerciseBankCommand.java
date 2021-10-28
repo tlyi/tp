@@ -12,7 +12,7 @@ import java.util.logging.Logger;
  * Represents the command that when executed, edits an item in the Exercise Bank.
  */
 public class EditExerciseBankCommand extends Command {
-    public static final String MESSAGE_SUCCESS = "Exercise bank item number %d has been changed to:"
+    public static final String MESSAGE_SUCCESS = "Item number %d in the exercise bank has been changed to:"
             + CommandMessages.INDENTED_LS + "%s";
     public static final String[] EXPECTED_PREFIXES = {
             COMMAND_PREFIX_EXERCISE_BANK,
@@ -36,7 +36,7 @@ public class EditExerciseBankCommand extends Command {
     @Override
     public CommandResult execute() {
         if (super.exerciseBank.getSize() == 0) {
-            logger.log(Level.WARNING, "Exercise bank list is empty.");
+            logger.log(Level.FINE, "Exercise bank list is empty.");
             return new CommandResult(CommandMessages.MESSAGE_EMPTY_EXERCISE_BANK);
         }
         try {
@@ -47,15 +47,15 @@ public class EditExerciseBankCommand extends Command {
             }
             if (this.newCalories != NULL_CALORIES) {
                 if (this.newCalories <= 0) {
-                    logger.log(Level.WARNING, "Exercise calorie is invalid");
+                    logger.log(Level.FINE, "Exercise calorie is invalid");
                     return new CommandResult(CommandMessages.MESSAGE_INVALID_EXERCISE_CALORIES);
                 }
                 item.setCalories(this.newCalories);
             }
             return new CommandResult(String.format(MESSAGE_SUCCESS, this.itemIndex + 1,
-                    super.exerciseBank.getItem(this.itemIndex).toStringWithoutTime()));
+                    super.exerciseBank.getItem(this.itemIndex).toStringWithoutDateAndTime()));
         } catch (IndexOutOfBoundsException e) {
-            logger.log(Level.WARNING, "Detected invalid exercise bank item index.");
+            logger.log(Level.FINE, "Detected invalid exercise bank item index.");
             if (super.exerciseBank.getSize() == 1) {
                 return new CommandResult(CommandMessages.MESSAGE_ONLY_ONE_IN_LIST);
             }

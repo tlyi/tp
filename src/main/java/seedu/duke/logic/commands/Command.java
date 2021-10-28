@@ -41,9 +41,9 @@ public abstract class Command {
     public static final String COMMAND_WORD_BMI = "bmi";
     public static final String COMMAND_WORD_PROFILE = "profile";
     public static final String COMMAND_WORD_DELETE_ALL = "all";
-    public static final double NULL_DOUBLE = 0;
-    public static final int NULL_INT = 0;
-    public static final char NULL_CHAR = Character.MIN_VALUE;
+    public static final double NULL_DOUBLE = Double.MIN_VALUE;
+    public static final int NULL_INT = Integer.MIN_VALUE;
+    public static final char NULL_CHAR = '|';
     public static final int NULL_CALORIES = -1;
     public static final String NULL_STRING = "";
     public static final LocalDate NULL_DATE = LocalDate.MIN;
@@ -124,7 +124,8 @@ public abstract class Command {
     public static boolean requiresFutureExerciseListStorageRewrite(Command command) {
         return command instanceof AddFutureExerciseCommand
                 || command instanceof DeleteFutureExerciseCommand
-                || command instanceof AddRecurringExerciseCommand;
+                || command instanceof AddRecurringExerciseCommand
+                || command instanceof EditFutureExerciseCommand;
     }
 
     /**

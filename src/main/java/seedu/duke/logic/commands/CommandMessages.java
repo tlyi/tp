@@ -1,5 +1,7 @@
 package seedu.duke.logic.commands;
 
+import java.time.format.DateTimeFormatter;
+
 /**
  * Contains all the general error messages that can be returned from Command classes.
  */
@@ -11,7 +13,8 @@ public class CommandMessages {
     public static final String QUOTATION = "\"";
     public static final String LONG_SPACE = "              ";
     public static final String BANK_SPACE = "          ";
-
+    public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
 
     //================ item type prefixes ================
     public static final String MESSAGE_EXERCISE_LIST_FORMAT =
@@ -50,7 +53,6 @@ public class CommandMessages {
             Command.COMMAND_PREFIX_DATE + Command.COMMAND_PREFIX_DELIMITER + LONG_SPACE + "date (DD-MM-YYYY)";
 
 
-
     //================ invalid attribute messages ================
     public static final String MESSAGE_INVALID_FOOD_CALORIES =
             "Food calories cannot be less than 0" + LS + "Try a positive value instead!";
@@ -63,6 +65,10 @@ public class CommandMessages {
     public static final String MESSAGE_EMPTY_FOOD_BANK = "No food items yet in the food bank!";
     public static final String MESSAGE_ONLY_ONE_IN_LIST = "You have only 1 item in the list!";
     public static final String MESSAGE_LIST_OUT_OF_BOUNDS = "Please input a valid item number from 1 to %s";
+    public static final String MESSAGE_FOOD_NOT_FOUND = "Food item with index %d, date %s and time %s "
+            + "is not found in the food list!";
+    public static final String MESSAGE_EXERCISE_NOT_FOUND = "Exercise item with index %d and date %s "
+            + "is not found in the exercise list!";
     public static final String MESSAGE_INVALID_EXERCISE_NOT_IN_BANK = "%s was not found in the exercise bank! "
             + "Please specify the calories for this item using the prefix "
             + QUOTATION + Command.COMMAND_PREFIX_CALORIES + Command.COMMAND_PREFIX_DELIMITER + QUOTATION + "!";
@@ -77,11 +83,6 @@ public class CommandMessages {
             + QUOTATION + "%s" + QUOTATION
             + " already exists in the exercise bank! (Names are case insensitive)"
             + LS + "Try using another name, or delete/edit the existing item first!";
-
-
-
-
-
 
 
     //================ command format suggestions ================
@@ -153,7 +154,6 @@ public class CommandMessages {
                     + MESSAGE_ACTIVITY_FACTOR_FORMAT + LS + LS
                     + "You can use any number of prefixes depending on your needs but please include at least one!" + LS
                     + "E.G: profile n/John";
-
 }
 
 

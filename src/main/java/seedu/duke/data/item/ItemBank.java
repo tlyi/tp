@@ -25,7 +25,6 @@ public class ItemBank {
         internalItems.add(item);
     }
 
-
     /**
      * Returns item with the given index in the item bank.
      *
@@ -71,7 +70,7 @@ public class ItemBank {
         StringBuilder listToString = new StringBuilder();
         for (int i = 0; i < internalItems.size(); i++) {
             listToString.append(TAB).append(i + 1).append(". ")
-                    .append(internalItems.get(i).toStringWithoutTime()).append(LS);
+                    .append(internalItems.get(i).toStringWithoutDateAndTime()).append(LS);
         }
         return listToString.toString().stripTrailing();
     }
@@ -84,7 +83,7 @@ public class ItemBank {
      * @throws ItemNotFoundInBankException Throws this exception when there is no item which has the same name
      *                                     as the input item
      */
-    public int getCaloriesOfItemWithMatchingName(String inputName) throws ItemNotFoundInBankException {
+    public int findCalorie(String inputName) throws ItemNotFoundInBankException {
         Item matchingItem = internalItems
                 .stream()
                 .filter(item -> item.getName().equalsIgnoreCase(inputName))

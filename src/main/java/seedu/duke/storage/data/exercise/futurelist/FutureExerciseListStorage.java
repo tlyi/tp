@@ -36,7 +36,7 @@ public class FutureExerciseListStorage extends Storage implements UpcomingStorag
         try {
             return FutureExerciseListDecoder.retrieveUpcomingListFromData(filePath);
         } catch (FileNotFoundException e) {
-            logger.log(Level.WARNING, "The path is missing ", filePath);
+            logger.log(Level.FINE, "The path is missing ", filePath);
             throw new UnableToReadFileException(fileName);
         }
     }
