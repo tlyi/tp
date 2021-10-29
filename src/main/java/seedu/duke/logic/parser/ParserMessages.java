@@ -29,12 +29,12 @@ public class ParserMessages {
     protected static final String MESSAGE_ERROR_ILLEGAL_CHARACTER = "Please do not use the character "
             + QUOTATION + FILE_TEXT_DELIMITER + QUOTATION
             + " in your input!";
-    protected static final String DATE_FORMAT = "DD-MM-YYYY";
-    protected static final String TIME_FORMAT = "HHMM";
+    protected static final String DATE_FORMAT = "dd-MM-yyyy";
+    protected static final String TIME_FORMAT = "HHmm";
     protected static final String MESSAGE_ERROR_INVALID_DATE_FORMAT = "Invalid date format! Please input date as "
-            + DATE_FORMAT;
+            + "DD-MM-YYYY";
     protected static final String MESSAGE_ERROR_INVALID_TIME_FORMAT = "Invalid time format! Please input time as "
-            + TIME_FORMAT;
+            + "HHMM";
     protected static final String MESSAGE_ERROR_INVALID_DAY_OF_THE_WEEK = "Invalid day format! Please input day(s) "
             + "between 1 and 7."
             + LS + "1 : Monday"

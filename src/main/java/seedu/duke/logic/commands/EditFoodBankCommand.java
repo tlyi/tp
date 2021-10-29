@@ -51,7 +51,7 @@ public class EditFoodBankCommand extends Command {
                 item.setCalories(this.newCalories);
             }
             return new CommandResult(String.format(MESSAGE_SUCCESS, this.itemIndex + 1,
-                    item.toString()));
+                    item.toStringWithoutDateAndTime()));
         } catch (IndexOutOfBoundsException e) {
             logger.log(Level.FINE, "Detected invalid food bank item index.");
             if (super.foodBank.getSize() == 1) {

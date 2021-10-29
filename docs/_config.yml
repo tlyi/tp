@@ -1,12 +1,11 @@
 title: "Fitbot"
 theme: minima
 
+
 header_pages:
   - UserGuide.md
   - DeveloperGuide.md
   - AboutUs.md
-
-repository: "AY2122S1-CS2113T-F14-2/tp"
 
 plugins:
   - jemoji

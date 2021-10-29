@@ -49,7 +49,9 @@ public class DeleteExerciseBankCommand extends Command {
         try {
             Exercise deletedExercise;
             deletedExercise = (Exercise) super.exerciseBank.deleteItem(this.itemIndex);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, deletedExercise, super.exerciseBank.getSize()));
+            return new CommandResult(String.format(MESSAGE_SUCCESS,
+                    deletedExercise.toStringWithoutDateAndTime(),
+                    super.exerciseBank.getSize()));
         } catch (IndexOutOfBoundsException e) {
             logger.log(Level.FINE, "Detected invalid exercise item index.");
             if (super.exerciseBank.getSize() == 1) {

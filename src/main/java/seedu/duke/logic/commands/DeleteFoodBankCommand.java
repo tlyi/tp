@@ -49,7 +49,9 @@ public class DeleteFoodBankCommand extends Command {
         try {
             Food deletedFood;
             deletedFood = (Food) super.foodBank.deleteItem(this.itemIndex);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, deletedFood, super.foodBank.getSize()));
+            return new CommandResult(String.format(MESSAGE_SUCCESS,
+                    deletedFood.toStringWithoutDateAndTime(),
+                    super.foodBank.getSize()));
         } catch (IndexOutOfBoundsException e) {
             logger.log(Level.FINE, "Detected invalid food item index.");
             if (super.foodBank.getSize() == 1) {
